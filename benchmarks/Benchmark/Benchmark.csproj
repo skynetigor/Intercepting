@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.6.103" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\DI.Intercepting.Core\DI.Intercepting.Core.csproj" />
+    <ProjectReference Include="..\..\src\MethodArgsValidation\DI.Intercepting.MethodArgsValidation.DataAnnotation\DI.Intercepting.MethodArgsValidation.DataAnnotation.csproj" />
+    <ProjectReference Include="..\..\src\MethodArgsValidation\DI.Intercepting.MethodArgsValidation.FluentValidation\DI.Intercepting.MethodArgsValidation.FluentValidation.csproj" />
+    <ProjectReference Include="..\..\src\MethodArgsValidation\DI.Intercepting.MethodArgsValidation\DI.Intercepting.MethodArgsValidation.Core.csproj" />
+  </ItemGroup>
+
+</Project>

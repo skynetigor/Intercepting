@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Castle.Core" Version="4.3.1" />
+    <PackageReference Include="FluentValidation" Version="7.6.103" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\DI.Intercepting.Core\DI.Intercepting.Core.csproj" />
+    <ProjectReference Include="..\..\src\DI.Intercepting.Repeater\DI.Intercepting.Repeater.csproj" />
+    <ProjectReference Include="..\..\src\Logging\DI.Intercepting.Logging\DI.Intercepting.Logging.Core.csproj" />
+    <ProjectReference Include="..\..\src\MethodArgsValidation\DI.Intercepting.MethodArgsValidation.DataAnnotation\DI.Intercepting.MethodArgsValidation.DataAnnotation.csproj" />
+    <ProjectReference Include="..\..\src\MethodArgsValidation\DI.Intercepting.MethodArgsValidation.FluentValidation\DI.Intercepting.MethodArgsValidation.FluentValidation.csproj" />
+    <ProjectReference Include="..\..\src\MethodArgsValidation\DI.Intercepting.MethodArgsValidation\DI.Intercepting.MethodArgsValidation.Core.csproj" />
+  </ItemGroup>
+
+</Project>
