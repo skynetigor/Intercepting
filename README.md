@@ -119,7 +119,7 @@ Implementation of IMethodArgsValidationProvider that uses DataAnnotation in orde
 # DI.Intercepting.MethodArgsValidation.DataAnnotation
 Implementation of IMethodArgsValidationProvider that uses FluentValidation in order to validate method arguments.
 
-<details><summary>Example code:</summary>
+<details><summary>Example code</summary>
 <p>
 Service:
 ```c#
