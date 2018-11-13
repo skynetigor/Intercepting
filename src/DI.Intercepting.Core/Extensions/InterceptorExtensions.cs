@@ -1,24 +1,19 @@
 ﻿using System;
 using DI.Intercepting.Core.Abstract;
-using DI.Intercepting.Core.Implementation;
 using DI.Intercepting.Core.Implementation.Internal;
 
 namespace Microsoft.Extensions.DependencyInjection.Intercepting
 {
     public static class InterceptorsExtensions
     {
-        public static IServiceCollection AddThroughInterceptorsPipeline(this IServiceCollection serviceCollection, Action<IInterceptorsPipelineServiceCollection> configAction)
+        public static IServiceCollection AddThroughInterceptorsPipeline(this IServiceCollection serviceCollection, Action<IInterceptorsCollection> configAction)
         {
-            configAction(new CustomServiceCollection(serviceCollection));
-            return serviceCollection;
-        }
+            ProxyContainer proxyContainer = new ProxyContainer();
+            InterceptorsCollections interceptorProviderServiceDescriptors = new InterceptorsCollections(proxyContainer);
 
-        public static IInterceptorsPipelineServiceCollection AddInvocationMiddleware(
-            this IInterceptorsPipelineServiceCollection serviceCollection,
-            Action<IInvocationContext, InvocationDelegate> middelware)
-        {
-            return serviceCollection.AddProxyProvider(
-                 new InterceptorProviderServiceDescriptor(sp => new MiddlewareProxyInterceptingProvider(middelware), ServiceLifetime.Transient));
+            configAction(interceptorProviderServiceDescriptors);
+
+            return new CustomServiceCollection(serviceCollection, proxyContainer);
         }
     }
 }

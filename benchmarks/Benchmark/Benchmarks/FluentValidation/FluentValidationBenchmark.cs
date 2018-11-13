@@ -24,9 +24,9 @@ namespace Benchmark.Benchmarks.FluentValidation
             };
         }
 
-        protected override IInterceptorsPipelineServiceCollection Intercepting(IServiceCollection sc)
+        protected override IInterceptorsCollection Intercepting(IServiceCollection sc)
         {
-            IInterceptorsPipelineServiceCollection p = null;
+            IInterceptorsCollection p = null;
             sc.AddThroughInterceptorsPipeline(c => p = c.AddFluentMethodArgsValidationProvider());
             return p;
         }

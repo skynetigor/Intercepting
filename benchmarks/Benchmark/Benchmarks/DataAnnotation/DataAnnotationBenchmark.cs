@@ -23,9 +23,9 @@ namespace Benchmark.Benchmarks.DataAnnotation
             };
         }
 
-        protected override IInterceptorsPipelineServiceCollection Intercepting(IServiceCollection sc)
+        protected override IInterceptorsCollection Intercepting(IServiceCollection sc)
         {
-            IInterceptorsPipelineServiceCollection p = null;
+            IInterceptorsCollection p = null;
             sc.AddThroughInterceptorsPipeline(c => p = c.AddDataAnnotationMethodArgsValidationProvider());
 
             return p;

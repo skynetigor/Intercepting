@@ -69,9 +69,9 @@ namespace MethodArgsValidationSample
             {
                 sc
                 .AddInterceptionLogger()
-                .AddDataAnnotationMethodArgsValidationProvider() // Register DataAnnotationMethodArgsValidationProvider in pipeline that will be validate method arguments
-                .AddSingleton<IDataAnnotationSampleService, DataAnnotationSampleService>(); // Register service that you need to call through interceptor
-            });
+                .AddDataAnnotationMethodArgsValidationProvider(); // Register DataAnnotationMethodArgsValidationProvider in pipeline that will be validate method arguments
+            })
+            .AddSingleton<IDataAnnotationSampleService, DataAnnotationSampleService>(); // Register service that you need to call through interceptor
 
             serviceProvider = serviceCollection.BuildServiceProvider();
         }

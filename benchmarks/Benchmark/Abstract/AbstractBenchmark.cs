@@ -11,11 +11,11 @@ namespace Benchmark.Abstract
     {
         private IServiceProvider _provider;
 
-        protected abstract IInterceptorsPipelineServiceCollection Intercepting(IServiceCollection sc);
+        protected abstract IInterceptorsCollection Intercepting(IServiceCollection sc);
 
         public void SwitchToIntercepting()
         {
-            Configure(t => Intercepting(t).AddSingleton<ISampleService<TModel>, SampleService<TModel>>());
+            Configure(t => Intercepting(t)).AddSingleton<ISampleService<TModel>, SampleService<TModel>>();
         }
 
         public void SwitchToDirectCalling()
@@ -34,13 +34,15 @@ namespace Benchmark.Abstract
 
         protected abstract TModel CreateModel();
 
-        private void Configure(Action<IServiceCollection> action)
+        private IServiceCollection Configure(Action<IServiceCollection> action)
         {
             IServiceCollection serviceCollection = new ServiceCollection();
 
             action(serviceCollection);
 
             _provider = serviceCollection.BuildServiceProvider();
+
+            return serviceCollection;
         }
     }
 }
