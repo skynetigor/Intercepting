@@ -4,7 +4,10 @@ Adding supporting of  intercepting for Microsoft.Extension.DependencyInjection a
 As interceptors is used Castle.DynamicProxy Interceptors.
 
 # DI.Intercepting.Core
-In order to create service through interceptor you need to register it in ServiceCollection as it's shown below:
+In order to create service through interceptor you need to register it in ServiceCollection.
+
+<details><summary>Example code</summary>
+<p>
 
 Your service:
 ```c#
@@ -104,6 +107,9 @@ namespace Simple_Project
 }
 
 ```
+</p>
+</details>
+
 # DI.Intercepting.MethodArgsValidation.Core
 Adds basic logic for validation of method arguments through interceptor by using validation provider that should implement IMethodArgsValidationProvider. If any parameter doesn't correspond to validation rules MethodArgsValidationException exception will be thrown.
 
