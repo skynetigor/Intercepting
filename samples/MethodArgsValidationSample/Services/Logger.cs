@@ -43,7 +43,7 @@ namespace MethodArgsValidationSample.Services
         public void LogException(IInvocationInfo invocationInfo, Exception exception)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"Info from logger: {exception.Message} ");
+            Console.WriteLine($"INFO FROM LOGGER: {exception.Message} ");
 
             Console.ResetColor();
         }

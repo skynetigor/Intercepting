@@ -27,21 +27,21 @@ namespace MethodArgsValidationSample
             catch (MethodArgsValidationException e)
             {
                 /* Error:
-    INFO FROM LOGGER: Invocation of "Add" method of "IDataAnnotationSampleService" service has started with following parameters:
+                INFO FROM LOGGER: Invocation of "Add" method of "IDataAnnotationSampleService" service has started with following parameters:
 
-        model: {"Name":null,"Surname":null,"Address":null,"Age":0}
+                    model: {"Name":null,"Surname":null,"Address":null,"Age":0}
 
-    Info from logger: An error has occured in "Add" method of service "IDataAnnotationSampleService" upon an attempt to validate arguments.
+                INFO FROM LOGGER: An error has occured in "Add" method of service "IDataAnnotationSampleService" upon an attempt to validate arguments.
 
-        Arguments that was not passed validation:
+                    Arguments that was not passed validation:
 
-            model (DataAnnotationSampleModel) - Validation failed :
-                Name:
-                    The Name field is required.
-                Address:
-                    The Address field is required.
-                Age:
-                    The field Age must be between 10 and 20.
+                        model (DataAnnotationSampleModel) - Validation failed :
+                            Name:
+                                The Name field is required.
+                            Address:
+                                The Address field is required.
+                            Age:
+                                The field Age must be between 10 and 20.
                 */
             }
             Console.ReadLine();
