@@ -252,6 +252,7 @@ namespace MethodArgsValidationSample
 </details>
 
 Benchmark of method args validation:
+
 ![alt text](https://github.com/skynetigor/Intercepting/blob/master/benchmarks/Results/MethodArgsValidationBenchmarkResult.jpg)
 
 
