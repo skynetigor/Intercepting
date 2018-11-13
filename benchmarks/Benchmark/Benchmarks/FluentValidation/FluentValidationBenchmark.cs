@@ -20,7 +20,7 @@ namespace Benchmark.Benchmarks.FluentValidation
                 Email = "some@email.com",
                 Address = "London",
                 Surname = "surname",
-                Code = ""
+                Code = "123"
             };
         }
 
