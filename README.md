@@ -252,7 +252,7 @@ namespace MethodArgsValidationSample
 </details>
 
 Benchmark of method args validation:
-[!alt text](https://github.com/skynetigor/Intercepting/blob/master/benchmarks/Results/MethodArgsValidationBenchmarkResult.jpg)
+![alt text](https://github.com/skynetigor/Intercepting/blob/master/benchmarks/Results/MethodArgsValidationBenchmarkResult.jpg)
 
 
 All these samples are available [here](https://github.com/skynetigor/Intercepting/tree/master/samples)
