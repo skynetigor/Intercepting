@@ -1,7 +1,7 @@
 # Intercepting
-Adding supporting of  intercepting for Microsoft.Extension.DependencyInjection and MethodArgsValidation.
+It adds supporting of intercepting for Microsoft.Extension.DependencyInjection.
 
-As interceptors is used Castle.DynamicProxy Interceptors.
+As interceptors are used Castle.DynamicProxy Interceptors.
 
 # DI.Intercepting.Core
 In order to create service through interceptor you need to register it in ServiceCollection.
@@ -250,6 +250,9 @@ namespace MethodArgsValidationSample
 ```
 </p>
 </details>
+
+Benchmark of method args validation:
+[!alt text](https://github.com/skynetigor/Intercepting/blob/master/benchmarks/Results/MethodArgsValidationBenchmarkResult.jpg)
 
 
 All these samples are available [here](https://github.com/skynetigor/Intercepting/tree/master/samples)
