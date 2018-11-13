@@ -1,15 +1,10 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using Simple_Project.Abstracts;
-using Simple_Project.Models;
 using Simple_Project.Services;
 using Microsoft.Extensions.DependencyInjection.Intercepting;
-using DI.Intercepting.Logging.Core.Abstract;
-using Microsoft.Extensions.DependencyInjection.Intercepting.Logging;
-using Microsoft.Extensions.DependencyInjection.Intercepting.MethodArgsValidation.DataAnnotation;
-using Microsoft.Extensions.DependencyInjection.Intercepting.MethodArgsValidation.FluentValidation;
-using Microsoft.Extensions.DependencyInjection.Intercepting.Repeater;
-using DI.Intercepting.Repeater.Abstract;
+using Simple_Project.Models;
+using DI.Intercepting.Core.Extensions;
 
 namespace Simple_Project
 {
@@ -20,110 +15,36 @@ namespace Simple_Project
         static void Main(string[] args)
         {
             ConfigureServices();
-            //new ProxyGenerator().CreateInterfaceProxyWithTarget<ISomeServiceForSomeModel1>(new SomeServiceForSomeModel1(), );
-            //Console.ReadLine();
-            try
-            {
-                var s = serviceProvider.GetService<ISomeServiceForSomeModel2>();
+            ISomeServiceForSomeModel1 someServiceForSomeModel1 = serviceProvider.GetService<ISomeServiceForSomeModel1>();
+            someServiceForSomeModel1.AddSomeModel1(new SomeModel1());
 
-                //var sp = serviceProvider.GetService<ISomeServiceForSomeModel1>();
-                //try
-                //{
-                //    sp.AddSomeModel1(new SomeModel1());
-                //}
-                //catch (Exception e)
-                //{
-                //    Console.WriteLine(e);
-                //}
-
-                //var r = s.Do();
-                s.AddSomeModel2(new SomeModel2
-                {
-                    Path = "someemail@gmail.com",
-                    Email = ""
-                },
-                    new SomeModel2
-                    {
-                        Path = "someemail@gmail.com",
-                        Email = "someemail@gmail.com"
-                    },
-                    new SomeModel2
-                    {
-                        Path = "someemail@gmail.com",
-                        Email = "someemail@gmail.com"
-                    },
-                    new SomeModel2
-                    {
-                        Path = "someemail@gmail.com",
-                        Email = "someemail@gmail.com"
-                    }, new SomeModel2
-                    {
-                        Path = "someemail@gmail.com",
-                        Email = "someemail@gmail.com"
-                    });
-
-                //Should be with errors
-            }
-            catch (Exception e)
-            {
-
-            }
             Console.ReadLine();
+            /* Output:
+                This info from middleware!
+                Method AddSomeModel1 has started execution.
+                SomeModel1 {"Name":null,"Count":0} was added
+                Method AddSomeModel1 has finished execution and returned True.
+                This info from middleware!
+            */
         }
 
         static void ConfigureServices()
         {
             IServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection.AddSingleton<IMethodInvocationLogger, Logger>();
-            serviceCollection.AddSingleton<IRepeaterEventService, RepeaterEventService>();
-            serviceCollection.AddThroughInterceptorsPipeline(cont =>
+
+            serviceCollection.AddThroughInterceptorsPipeline(sc =>
             {
-                cont.AddInvocationMiddleware((ctx, next) =>
-{
-    Console.WriteLine("second pipeline");
-    next();
-}).AddFluentMethodArgsValidationProvider(typeof(Program).Assembly).AddSingleton<ISomeServiceForSomeModel1, SomeServiceForSomeModel1>();
-            });
-            serviceCollection.AddThroughInterceptorsPipeline(cont =>
-            {
-                cont
-                    .AddInterceptionLogger()
-                    .AddInvocationMiddleware((ctx, next) =>
-                    {
-                        Console.WriteLine("World");
-                        var c = next;
-                        next();
-                        Console.WriteLine("World 2");
-                        bool s = next == c;
-                        next();
-                        Console.WriteLine("World 3");
-                        s = next == c;
+                sc
+                .AddInvocationMiddleware((ctx, next) =>
+                {
+                    Console.WriteLine("This info from middleware before method execution!");
+                    next();
+                    Console.WriteLine("This info from middleware after method execution!");
 
-                        //var logger = ctx.ServiceProvider.GetService<ILogger>();
-
-                        //try
-                        //{
-                        //    next();
-                        //}
-                        //catch (Exception e)
-                        //{
-                        //    Console.ForegroundColor = ConsoleColor.Cyan;
-                        //    Console.WriteLine(e);
-                        //    Console.ResetColor();
-
-                        //    logger.Log(LogLevel.Critical, new EventId(0), e, null);
-                        //    throw e;
-                        //}
-
-                        //Console.WriteLine("from middleware");
-                    })
-                    .AddDataAnnotationMethodArgsValidationProvider()
-                    .AddRepeater()
-                    .AddFluentMethodArgsValidationProvider()
-
-                    .AddSingleton<IDataAnnotationSampleService, DataAnnotationSampleService>()
-                    .AddSingleton<ISomeServiceForSomeModel2, SomeServiceForSomeModel2>();
-            });
+                })
+                .AddSingleton(new SomeProxyProvider()); // Register interceptor as singleton
+            })
+            .AddSingleton<ISomeServiceForSomeModel1, SomeServiceForSomeModel1>(); // Register service that you need to call through interceptor
 
             serviceProvider = serviceCollection.BuildServiceProvider();
         }

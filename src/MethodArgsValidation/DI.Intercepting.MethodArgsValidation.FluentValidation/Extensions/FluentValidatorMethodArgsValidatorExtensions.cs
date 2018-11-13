@@ -15,7 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection.Intercepting.MethodArgsValida
         /// </summary>
         /// <param name="serviceCollection">ServiceCollection</param>
         /// <returns>ServiceCollection</returns>
-        public static IInterceptorsPipelineServiceCollection AddFluentMethodArgsValidationProvider(this IInterceptorsPipelineServiceCollection serviceCollection)
+        public static IInterceptorsCollection AddFluentMethodArgsValidationProvider(this IInterceptorsCollection serviceCollection)
         {
             serviceCollection.AddMethodArgsValidationProvider(new FluentValidationMethodArgsValidationProvider(Assembly.GetCallingAssembly()));
             return serviceCollection;
@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection.Intercepting.MethodArgsValida
         /// </summary>
         /// <param name="serviceCollection">ServiceCollection</param>
         /// <returns>ServiceCollection</returns>
-        public static IInterceptorsPipelineServiceCollection AddFluentMethodArgsValidationProvider(this IInterceptorsPipelineServiceCollection serviceCollection, Assembly assemblyWithRules)
+        public static IInterceptorsCollection AddFluentMethodArgsValidationProvider(this IInterceptorsCollection serviceCollection, Assembly assemblyWithRules)
         {
             serviceCollection.AddMethodArgsValidationProvider(new FluentValidationMethodArgsValidationProvider(assemblyWithRules));
             return serviceCollection;

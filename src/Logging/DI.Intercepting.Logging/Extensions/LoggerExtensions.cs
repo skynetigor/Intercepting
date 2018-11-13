@@ -1,41 +1,34 @@
 ﻿using System;
 using DI.Intercepting.Core.Abstract;
-using DI.Intercepting.Core.Implementation;
 using DI.Intercepting.Logging.Core.Abstract;
 using DI.Intercepting.Logging.Core.Implemantation.Internal;
+using DI.Intercepting.Core.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection.Intercepting.Logging
 {
     public static class LoggerExtensions
     {
-        public static IInterceptorsPipelineServiceCollection AddInterceptionLogger(
-            this IInterceptorsPipelineServiceCollection serviceCollection, IMethodInvocationLogger logger)
+        public static IInterceptorsCollection AddInterceptionLogger(
+            this IInterceptorsCollection serviceCollection, IMethodInvocationLogger logger)
         {
-            return serviceCollection.AddProxyProvider(
-                new InterceptorProviderServiceDescriptor(new LoggerInterceptionProvider(logger)));
+            return serviceCollection.AddSingleton(new LoggerInterceptionProvider(logger));
         }
 
-        public static IInterceptorsPipelineServiceCollection AddInterceptionLogger<TLogger>(
-            this IInterceptorsPipelineServiceCollection serviceCollection) where TLogger : IMethodInvocationLogger
+        public static IInterceptorsCollection AddInterceptionLogger<TLogger>(
+            this IInterceptorsCollection serviceCollection) where TLogger : IMethodInvocationLogger
         {
-            return serviceCollection.AddProxyProvider(
-                new InterceptorProviderServiceDescriptor(
-                    new LoggerInterceptionProvider(sp => sp.GetService<TLogger>())));
+            return serviceCollection.AddSingleton(new LoggerInterceptionProvider(sp => sp.GetService<TLogger>()));
         }
 
-        public static IInterceptorsPipelineServiceCollection AddInterceptionLogger(
-            this IInterceptorsPipelineServiceCollection serviceCollection, Func<IServiceProvider, IMethodInvocationLogger> loggerFactory)
+        public static IInterceptorsCollection AddInterceptionLogger(
+            this IInterceptorsCollection serviceCollection, Func<IServiceProvider, IMethodInvocationLogger> loggerFactory)
         {
-            return serviceCollection.AddProxyProvider(
-                new InterceptorProviderServiceDescriptor(
-                    new LoggerInterceptionProvider(loggerFactory)));
+            return serviceCollection.AddSingleton(new LoggerInterceptionProvider(loggerFactory));
         }
 
-        public static IInterceptorsPipelineServiceCollection AddInterceptionLogger(this IInterceptorsPipelineServiceCollection serviceCollection)
+        public static IInterceptorsCollection AddInterceptionLogger(this IInterceptorsCollection serviceCollection)
         {
-            return serviceCollection.AddProxyProvider(
-                            new InterceptorProviderServiceDescriptor(
-                                new LoggerInterceptionProvider()));
+            return serviceCollection.AddSingleton(new LoggerInterceptionProvider());
         }
     }
 }

@@ -2,7 +2,7 @@
 using Benchmark.Benchmarks.CommonServices;
 using DI.Intercepting.Core.Abstract;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.Extensions.DependencyInjection.Intercepting;
 namespace Benchmark.Abstract
 {
     public abstract class AbstractBenchmark<TService, TModel> : IBenchmark
@@ -11,11 +11,11 @@ namespace Benchmark.Abstract
     {
         private IServiceProvider _provider;
 
-        protected abstract IInterceptorsPipelineServiceCollection Intercepting(IServiceCollection sc);
+        protected abstract void Intercepting(IInterceptorsCollection sc);
 
         public void SwitchToIntercepting()
         {
-            Configure(t => Intercepting(t).AddSingleton<ISampleService<TModel>, SampleService<TModel>>());
+            Configure(t => t.AddThroughInterceptorsPipeline(Intercepting).AddSingleton<ISampleService<TModel>, SampleService<TModel>>());
         }
 
         public void SwitchToDirectCalling()

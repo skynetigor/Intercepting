@@ -4,6 +4,6 @@ namespace Simple_Project.Abstracts
 {
     public interface ISomeServiceForSomeModel1
     {
-        void AddSomeModel1(SomeModel1 study);
+        bool AddSomeModel1(SomeModel1 study);
     }
 }

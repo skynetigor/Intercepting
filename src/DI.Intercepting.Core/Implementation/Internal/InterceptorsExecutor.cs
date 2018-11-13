@@ -8,23 +8,16 @@ namespace DI.Intercepting.Core.Implementation.Internal
     {
         public void StartExecuting(IInvocationContext context, IEnumerable<IInterceptingProvider> interceptors)
         {
-            var invocationPipeline = BuildPipeline(context, interceptors);
-
-            foreach (var item in invocationPipeline)
-            {
-                item?.Invoke();
-            }
+            BuildPipeline(context, interceptors)?.Invoke();
         }
 
-        private InvocationDelegate[] BuildPipeline(IInvocationContext context, IEnumerable<IInterceptingProvider> interceptors)
+        private InvocationDelegate BuildPipeline(IInvocationContext context, IEnumerable<IInterceptingProvider> interceptors)
         {
             var interceptorsArray = interceptors.ToArray();
-            InvocationDelegate[] invocationPipeline = new InvocationDelegate[interceptorsArray.Length + 1];
 
             if (interceptorsArray.Length > 0)
             {
                 InvocationDelegate next = () => { };
-                invocationPipeline[invocationPipeline.Length - 1] = next;
 
                 for (int i = interceptorsArray.Length - 1; i >= 0; i--)
                 {
@@ -32,18 +25,21 @@ namespace DI.Intercepting.Core.Implementation.Internal
 
                     if (interceptor != null)
                     {
-                        InvocationDelegate d = next;
+                        InvocationDelegate invDel = next;
                         next = () =>
                         {
-                            interceptor.Intercept(context, d);
+                            interceptor.Intercept(context, invDel);
                         };
+                    }
 
-                        invocationPipeline[i] = next;
+                    if(i == 0)
+                    {
+                        return next;
                     }
                 }
             }
 
-            return invocationPipeline;
+            return null;
         }
     }
 }

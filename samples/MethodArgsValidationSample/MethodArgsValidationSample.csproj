@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Logging\DI.Intercepting.Logging\DI.Intercepting.Logging.Core.csproj" />
+        <ProjectReference Include="..\..\src\MethodArgsValidation\DI.Intercepting.MethodArgsValidation.DataAnnotation\DI.Intercepting.MethodArgsValidation.DataAnnotation.csproj" />
+    </ItemGroup>
+
+</Project>

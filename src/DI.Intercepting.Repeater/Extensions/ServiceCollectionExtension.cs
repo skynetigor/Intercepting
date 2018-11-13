@@ -1,15 +1,14 @@
 ﻿using DI.Intercepting.Core.Abstract;
-using DI.Intercepting.Core.Implementation;
+using DI.Intercepting.Core.Extensions;
 using DI.Intercepting.Repeater.Implementation;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection.Intercepting.Repeater
 {
     public static class ServiceCollectionExtension
     {
-        public static IInterceptorsPipelineServiceCollection AddRepeater(this IInterceptorsPipelineServiceCollection serviceCollection)
+        public static IInterceptorsCollection AddRepeater(this IInterceptorsCollection serviceCollection)
         {
-            return serviceCollection.AddProxyProvider(new InterceptorProviderServiceDescriptor(typeof(RepeaterInterceptor), ServiceLifetime.Singleton));
+            return serviceCollection.AddSingleton(typeof(RepeaterInterceptor));
         }
     }
 }

@@ -3,9 +3,9 @@ using System.Text;
 using DI.Intercepting.Logging.Core.Abstract;
 using Newtonsoft.Json;
 
-namespace Simple_Project.Services
+namespace MethodArgsValidationSample.Services
 {
-    public class Logger : IMethodInvocationLogger
+    class Logger : IMethodInvocationLogger
     {
         public void AfterInvocation(IInvocationInfo invocationInfo)
         {
@@ -13,7 +13,7 @@ namespace Simple_Project.Services
             var methodArguments = invocationInfo.Argumets;
             Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.WriteLine($"\n Invocation of \"{method.Name}\" method of \"{method.DeclaringType.Name}\" service has finished invocation and returned {JsonConvert.SerializeObject(invocationInfo.ReturnedValue)} ");
+            Console.WriteLine($"INFO FROM LOGGER: Invocation of \"{method.Name}\" method of \"{method.DeclaringType.Name}\" service has finished invocation and returned {JsonConvert.SerializeObject(invocationInfo.ReturnedValue)} ");
             Console.ResetColor();
         }
 
@@ -23,8 +23,8 @@ namespace Simple_Project.Services
             var methodArguments = invocationInfo.Argumets;
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("INFO: \n");
-            var builder = new StringBuilder($"\n Invocation of \"{method.Name}\" method of \"{method.DeclaringType.Name}\" service has started with following parameters: \n ");
+
+            var builder = new StringBuilder($"Invocation of \"{method.Name}\" method of \"{method.DeclaringType.Name}\" service has started with following parameters: \n ");
 
             var paramss = method.GetParameters();
 
@@ -36,15 +36,14 @@ namespace Simple_Project.Services
             }
 
             builder.Append("\n");
-            Console.WriteLine(builder);
+            Console.WriteLine($"INFO FROM LOGGER: {builder}" );
             Console.ResetColor();
         }
 
         public void LogException(IInvocationInfo invocationInfo, Exception exception)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("An error occured: \n");
-            Console.WriteLine(exception.Message);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"Info from logger: {exception.Message} ");
 
             Console.ResetColor();
         }

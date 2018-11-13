@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection.Intercepting.MethodArgsValida
         /// </summary>
         /// <param name="serviceCollection">ServiceCollection</param>
         /// <returns>ProxyProvidersServiceCollection</returns>
-        public static IInterceptorsPipelineServiceCollection AddDataAnnotationMethodArgsValidationProvider(this IInterceptorsPipelineServiceCollection serviceCollection)
+        public static IInterceptorsCollection AddDataAnnotationMethodArgsValidationProvider(this IInterceptorsCollection serviceCollection)
         {
             serviceCollection.AddMethodArgsValidationProvider(new DataAnnotationsMethodArgsValidationProvider());
             return serviceCollection;
