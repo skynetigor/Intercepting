@@ -1,15 +1,10 @@
-﻿using DI.Intercepting.Core.Implementation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.Collections.Generic;
+using DI.Intercepting.Core.Implementation;
 
 namespace DI.Intercepting.Core.Abstract
 {
-    public interface IInterceptorsPipelineServiceCollection : IServiceCollection
+    public interface IInterceptorsCollection : IList<InterceptorProviderServiceDescriptor>
     {
-        /// <summary>
-        /// The method that's adding interceptors into invocation pipeline
-        /// </summary>
-        /// <param name="serviceDescriptor">InterceptorProviderServiceDescriptor</param>
-        /// <returns></returns>
-        IInterceptorsPipelineServiceCollection AddProxyProvider(InterceptorProviderServiceDescriptor serviceDescriptor);
+        
     }
 }

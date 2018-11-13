@@ -47,8 +47,6 @@ namespace Benchmark
 
                 foreach (var benchmarkInstance in _benchmarkInstances)
                 {
-                    
-
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine(benchmarkInstance.GetType().Name);
                     Console.ResetColor();

@@ -3,8 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Simple_Project.Abstracts;
 using Simple_Project.Services;
 using Microsoft.Extensions.DependencyInjection.Intercepting;
-using DI.Intercepting.Core.Implementation;
 using Simple_Project.Models;
+using DI.Intercepting.Core.Extensions;
 
 namespace Simple_Project
 {
@@ -35,14 +35,16 @@ namespace Simple_Project
             serviceCollection.AddThroughInterceptorsPipeline(sc =>
             {
                 sc
-                .AddInvocationMiddleware((ctx, next) => {
-                    Console.WriteLine("This info from middleware!");
+                .AddInvocationMiddleware((ctx, next) =>
+                {
+                    Console.WriteLine("This info from middleware before method execution!");
                     next();
-                    Console.WriteLine("This info from middleware!");
+                    Console.WriteLine("This info from middleware after method execution!");
+
                 })
-                .AddProxyProvider(new InterceptorProviderServiceDescriptor(new SomeProxyProvider())) // Register interceptor
-                .AddSingleton<ISomeServiceForSomeModel1, SomeServiceForSomeModel1>(); // Register service that you need to call through interceptor
-            });
+                .AddSingleton(new SomeProxyProvider()); // Register interceptor as singleton
+            })
+            .AddSingleton<ISomeServiceForSomeModel1, SomeServiceForSomeModel1>(); // Register service that you need to call through interceptor
 
             serviceProvider = serviceCollection.BuildServiceProvider();
         }

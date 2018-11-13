@@ -20,15 +20,13 @@ namespace Benchmark.Benchmarks.FluentValidation
                 Email = "some@email.com",
                 Address = "London",
                 Surname = "surname",
-                Code = "0345"
+                Code = "123"
             };
         }
 
-        protected override IInterceptorsPipelineServiceCollection Intercepting(IServiceCollection sc)
+        protected override void Intercepting(IInterceptorsCollection sc)
         {
-            IInterceptorsPipelineServiceCollection p = null;
-            sc.AddThroughInterceptorsPipeline(c => p = c.AddFluentMethodArgsValidationProvider());
-            return p;
+            sc.AddFluentMethodArgsValidationProvider();
         }
     }
 }
