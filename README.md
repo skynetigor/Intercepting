@@ -98,10 +98,10 @@ namespace Simple_Project
 # DI.Intercepting.MethodArgsValidation.Core
 Adds basic logic for validation of method arguments through interceptor by using validation provider that should implement IMethodArgsValidationProvider. If any parameter doesn't correspond to validation rules MethodArgsValidationException exception will be thrown.
 
-# DI.Intercepting.MethodArgsValidation.DataAnnotation
+# DI.Intercepting.MethodArgsValidation.FluentValidation
 Implementation of IMethodArgsValidationProvider that uses DataAnnotation in order to validate method arguments.
 
-# DI.Intercepting.MethodArgsValidation.FluentValidation
+# DI.Intercepting.MethodArgsValidation.DataAnnotation
 Implementation of IMethodArgsValidationProvider that uses FluentValidation in order to validate method arguments.
 
 Example of method args validation is accesed in MethodArgsValidationSample
@@ -160,6 +160,8 @@ using MethodArgsValidationSample.Services;
 using MethodArgsValidationSample.Models;
 using Microsoft.Extensions.DependencyInjection.Intercepting.MethodArgsValidation.DataAnnotation;
 using DI.Intercepting.MethodArgsValidation.Core;
+using Microsoft.Extensions.DependencyInjection.Intercepting.Logging;
+using DI.Intercepting.Logging.Core.Abstract;
 
 namespace MethodArgsValidationSample
 {
@@ -170,8 +172,7 @@ namespace MethodArgsValidationSample
         static void Main(string[] args)
         {
             ConfigureServices();
-            IDataAnnotationSampleService someServiceForSomeModel1 = serviceProvider
-                                            .GetService<IDataAnnotationSampleService>();
+            IDataAnnotationSampleService someServiceForSomeModel1 = serviceProvider.GetService<IDataAnnotationSampleService>();
 
             try
             {
@@ -179,9 +180,12 @@ namespace MethodArgsValidationSample
             }
             catch (MethodArgsValidationException e)
             {
-                Console.WriteLine(e.Message);
                 /* Error:
-                 An error has occured in "Add" method of service "IDataAnnotationSampleService" upon an attempt to validate arguments.
+                INFO FROM LOGGER: Invocation of "Add" method of "IDataAnnotationSampleService" service has started with following parameters:
+
+                    model: {"Name":null,"Surname":null,"Address":null,"Age":0}
+
+                INFO FROM LOGGER: An error has occured in "Add" method of service "IDataAnnotationSampleService" upon an attempt to validate arguments.
 
                     Arguments that was not passed validation:
 
@@ -195,29 +199,30 @@ namespace MethodArgsValidationSample
                 */
             }
             Console.ReadLine();
-            try
-            {
+            
                 someServiceForSomeModel1.Add(new DataAnnotationSampleModel { Name = "1234567890", Address = "SomeAdress", Age = 15 });
-            }
-            catch (MethodArgsValidationException e)
-            {
-                Console.WriteLine(e.Message);
+            
                 /* Success:
-                 SomeModel1 {"Name":"1234567890","Surname":null,"Address":"SomeAdress","Age":15} was added
+                INFO FROM LOGGER: Invocation of "Add" method of "IDataAnnotationSampleService" service has started with following parameters:
+
+                    model: {"Name":"1234567890","Surname":null,"Address":"SomeAdress","Age":15}
+
+                    SomeModel1 {"Name":"1234567890","Surname":null,"Address":"SomeAdress","Age":15} was added
+                INFO FROM LOGGER: Invocation of "Add" method of "IDataAnnotationSampleService" service has finished invocation and returned null
                 */
-            }
 
             Console.ReadLine();
-
         }
 
         static void ConfigureServices()
         {
             IServiceCollection serviceCollection = new ServiceCollection();
 
+            serviceCollection.AddSingleton<IMethodInvocationLogger, Logger>();
             serviceCollection.AddThroughInterceptorsPipeline(sc =>
             {
                 sc
+                .AddInterceptionLogger()
                 .AddDataAnnotationMethodArgsValidationProvider() // Register DataAnnotationMethodArgsValidationProvider in pipeline that will be validate method arguments
                 .AddSingleton<IDataAnnotationSampleService, DataAnnotationSampleService>(); // Register service that you need to call through interceptor
             });
@@ -226,7 +231,6 @@ namespace MethodArgsValidationSample
         }
     }
 }
-
 ```
 
 All these samples available [here](https://github.com/skynetigor/Intercepting/tree/master/samples)
