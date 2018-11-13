@@ -93,7 +93,7 @@ namespace Simple_Project
                     next();
                     Console.WriteLine("This info from middleware after method execution!");
 
-                })
+                }) // Register middleware
                 .AddSingleton(new SomeProxyProvider()); // Register interceptor as singleton
             })
             .AddSingleton<ISomeServiceForSomeModel1, SomeServiceForSomeModel1>(); // Register service that you need to call through interceptor
@@ -102,7 +102,6 @@ namespace Simple_Project
         }
     }
 }
-
 
 ```
 # DI.Intercepting.MethodArgsValidation.Core
