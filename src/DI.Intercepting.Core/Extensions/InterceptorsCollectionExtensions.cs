@@ -32,7 +32,7 @@ namespace DI.Intercepting.Core.Extensions
             return sc;
         }
 
-        public static IInterceptorsCollection Add(this IInterceptorsCollection sc, Type interceptingProviderType)
+        public static IInterceptorsCollection AddSingleton(this IInterceptorsCollection sc, Type interceptingProviderType)
         {
             sc.Add(new InterceptorProviderServiceDescriptor(interceptingProviderType));
             return sc;

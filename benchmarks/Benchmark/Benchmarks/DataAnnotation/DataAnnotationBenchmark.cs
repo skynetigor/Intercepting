@@ -1,9 +1,7 @@
 ﻿using Benchmark.Abstract;
 using Benchmark.Benchmarks.DataAnnotation.Models;
 using Benchmark.Benchmarks.DataAnnotation.Services;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Intercepting.MethodArgsValidation.DataAnnotation;
-using Microsoft.Extensions.DependencyInjection.Intercepting;
 using DI.Intercepting.Core.Abstract;
 
 namespace Benchmark.Benchmarks.DataAnnotation
@@ -23,12 +21,9 @@ namespace Benchmark.Benchmarks.DataAnnotation
             };
         }
 
-        protected override IInterceptorsCollection Intercepting(IServiceCollection sc)
+        protected override void Intercepting(IInterceptorsCollection sc)
         {
-            IInterceptorsCollection p = null;
-            sc.AddThroughInterceptorsPipeline(c => p = c.AddDataAnnotationMethodArgsValidationProvider());
-
-            return p;
+            sc.AddDataAnnotationMethodArgsValidationProvider();
         }
     }
 }

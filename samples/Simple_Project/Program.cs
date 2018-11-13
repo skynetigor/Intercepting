@@ -37,11 +37,12 @@ namespace Simple_Project
                 sc
                 .AddInvocationMiddleware((ctx, next) =>
                 {
-                    Console.WriteLine("This info from middleware!");
+                    Console.WriteLine("This info from middleware before method execution!");
                     next();
-                    Console.WriteLine("This info from middleware!");
+                    Console.WriteLine("This info from middleware after method execution!");
+
                 })
-                .AddSingleton(new SomeProxyProvider()); // Register interceptor
+                .AddSingleton(new SomeProxyProvider()); // Register interceptor as singleton
             })
             .AddSingleton<ISomeServiceForSomeModel1, SomeServiceForSomeModel1>(); // Register service that you need to call through interceptor
 
