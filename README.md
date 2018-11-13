@@ -251,4 +251,5 @@ namespace MethodArgsValidationSample
 </p>
 </details>
 
-All these samples available [here](https://github.com/skynetigor/Intercepting/tree/master/samples)
+
+All these samples are available [here](https://github.com/skynetigor/Intercepting/tree/master/samples)
