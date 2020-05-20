@@ -1,5 +1,5 @@
 # Intercepting
-It adds supporting of intercepting for Microsoft.Extension.DependencyInjection.
+It adds support of intercepting for Microsoft.Extension.DependencyInjection.
 
 As interceptors are used Castle.DynamicProxy Interceptors.
 
